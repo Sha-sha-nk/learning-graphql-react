@@ -14,8 +14,9 @@ const mutation = new GraphQLObjectType({
       args: {
         title: { type: GraphQLString }
       },
-      resolve(parentValue, { title }) {
-        return (new Song({ title })).save()
+      async resolve(parentValue, { title }) {
+        const resp = await (new Song({ title })).save();
+        return resp;
       }
     },
     addLyricToSong: {
@@ -38,8 +39,10 @@ const mutation = new GraphQLObjectType({
     deleteSong: {
       type: SongType,
       args: { id: { type: GraphQLID } },
-      resolve(parentValue, { id }) {
-        return Song.remove({ _id: id });
+      async resolve(parentValue, { id }) {
+        const resp = await Song.remove({ _id: id });
+        console.log(resp);
+        return resp;
       }
     }
   }

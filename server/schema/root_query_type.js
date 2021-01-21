@@ -11,8 +11,9 @@ const RootQuery = new GraphQLObjectType({
   fields: () => ({
     songs: {
       type: new GraphQLList(SongType),
-      resolve() {
-        return Song.find({});
+      async resolve() {
+        const resp = await Song.find({});
+        return resp;
       }
     },
     song: {
